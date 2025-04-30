@@ -88,7 +88,6 @@ with gr.Blocks() as demo:
 
     gr.Markdown("""
     **Developed by:**  
-    
     Mohamed Irfan, International Center for Biosaline Agriculture
     """)
     
