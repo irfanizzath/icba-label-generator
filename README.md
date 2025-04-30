@@ -1,8 +1,8 @@
 ---
 title: Small Label Generator
 emoji: 🌱
-colorFrom: pink
-colorTo: yellow
+colorFrom: green
+colorTo: blue
 sdk: gradio
 sdk_version: 5.28.0
 app_file: app.py
