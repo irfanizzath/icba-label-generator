@@ -62,9 +62,10 @@ def generate_labels(file, rack_number):
 with gr.Blocks() as demo:
     with gr.Row():
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
-        gr.Markdown("# Genebank Label Generator")
 
     gr.Markdown("""
+    # Genebank Label Generator
+    
     **Introduction:**  
     - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
 
