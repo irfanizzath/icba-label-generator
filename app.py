@@ -66,9 +66,10 @@ with gr.Blocks() as demo:
 
     gr.Markdown("""
     **Instructions:**  
-    - Upload an `.xlsx` file containing a column named `Sticker` with bottle IDs.  
-    - You can [download a sample Excel file here](file/Bottle_Location.xlsx) to check the format.
+    - Upload an `.xlsx` file containing a column named `Sticker` with bottle IDs.
+    - Or download and check the format from the sample file below.
     """)
+    gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
 
     with gr.Row():
         file = gr.File(label="Upload Excel File (.xlsx)", file_types=[".xlsx"])
@@ -80,4 +81,5 @@ with gr.Blocks() as demo:
     generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
 
 demo.launch()
+
 
