@@ -88,3 +88,4 @@ with gr.Blocks() as demo:
     generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
 
 demo.launch()
+
