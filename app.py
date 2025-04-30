@@ -65,9 +65,15 @@ with gr.Blocks() as demo:
         gr.Markdown("# Genebank Label Generator")
 
     gr.Markdown("""
+    **Introduction:**  
+    - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
+
     **Instructions:**  
     - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
-    - Or download and check the format from the sample file below.
+    - Enter the correct Rack number.
+    - You can download and check the format from the sample file below for reference.
+    - Copy and paste the ZPL output in the GGCE Label Printer App.
+
     """)
     gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
 
@@ -80,6 +86,12 @@ with gr.Blocks() as demo:
     
     generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
 
+    gr.Markdown("""
+    **Developed by:**  
+    
+    Mohamed Irfan, International Center for Biosaline Agriculture
+    """)
+    
 demo.launch()
 
 
