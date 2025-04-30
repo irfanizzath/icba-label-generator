@@ -1,3 +1,5 @@
+!pip install gradio pandas openpyxl
+
 import gradio as gr
 import pandas as pd
 
