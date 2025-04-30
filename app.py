@@ -62,11 +62,11 @@ def generate_labels(file, rack_number):
 with gr.Blocks() as demo:
     with gr.Row():
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
-        gr.Markdown("### Genebank Label Generator")
+        gr.Markdown("# Genebank Label Generator")
 
     gr.Markdown("""
     **Instructions:**  
-    - Upload an `.xlsx` file containing a column named `Sticker` with bottle IDs.
+    - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
     - Or download and check the format from the sample file below.
     """)
     gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
