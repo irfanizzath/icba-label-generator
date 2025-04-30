@@ -1,6 +1,6 @@
 ---
 title: Small Label Generator
-emoji: 🚀
+emoji: 🌱
 colorFrom: pink
 colorTo: yellow
 sdk: gradio
