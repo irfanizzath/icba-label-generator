@@ -2,6 +2,21 @@
 import gradio as gr
 import pandas as pd
 
+
+# Title section with logo and link
+def header_html():
+    return """
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <a href="https://www.biosaline.org/" target="_blank">
+            <img src="file/logo.png" alt="ICBA Logo" style="height: 80px;">
+        </a>
+        <h1 style="font-size: 28px; margin: 0;">Genebank Label Generator</h1>
+    </div>
+    """
+
+with gr.Blocks() as demo:
+    gr.HTML(header_html())
+    
 def small_label(rack_number, plastic_bottle1, plastic_bottle2):
     return f'''
     CT~~CD,~CC^~CT~
