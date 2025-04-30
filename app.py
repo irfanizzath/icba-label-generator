@@ -1,21 +1,10 @@
 import gradio as gr
 import pandas as pd
 
-# HTML Header with ICBA logo and title
-def header_html():
-    return """
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <a href="https://www.biosaline.org/" target="_blank">
-            <img src="file/logo.png" alt="ICBA Logo" style="height: 80px;">
-        </a>
-        <h1 style="font-size: 28px; margin: 0;">Genebank Label Generator</h1>
-    </div>
-    """
-
-# ZPL label format generator
+# ZPL label generation function
 def small_label(rack_number, plastic_bottle1, plastic_bottle2):
     return f'''
-    CT~~CD,~CC^~CT~
+CT~~CD,~CC^~CT~
 ^XA
 ~TA000
 ~JSN
@@ -48,7 +37,7 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 ^XZ
     '''
 
-# Function to read file and generate label output
+# Label generation from Excel
 def generate_labels(file, rack_number):
     try:
         df = pd.read_excel(file.name)
@@ -70,14 +59,16 @@ def generate_labels(file, rack_number):
 
 # Gradio UI
 with gr.Blocks() as demo:
-    gr.HTML(header_html())
-    
+    with gr.Row():
+        gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
+        gr.Markdown("### Genebank Label Generator")
+
     gr.Markdown("""
     **Instructions:**  
-    - Upload `.xlsx` file with list of locations in a column named `Sticker`.  
-    - Check the [sample file here](file/Bottle_Location.xlsx) for correct format.
+    - Upload an `.xlsx` file containing a column named `Sticker` with bottle IDs.  
+    - You can [download a sample Excel file here](file/Bottle_Location.xlsx) to check the format.
     """)
-    
+
     with gr.Row():
         file = gr.File(label="Upload Excel File (.xlsx)", file_types=[".xlsx"])
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
