@@ -1,9 +1,7 @@
-
 import gradio as gr
 import pandas as pd
 
-
-# Title section with logo and link
+# HTML Header with ICBA logo and title
 def header_html():
     return """
     <div style="display: flex; align-items: center; gap: 20px;">
@@ -14,9 +12,7 @@ def header_html():
     </div>
     """
 
-with gr.Blocks() as demo:
-    gr.HTML(header_html())
-    
+# ZPL label format generator
 def small_label(rack_number, plastic_bottle1, plastic_bottle2):
     return f'''
     CT~~CD,~CC^~CT~
@@ -52,6 +48,7 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 ^XZ
     '''
 
+# Function to read file and generate label output
 def generate_labels(file, rack_number):
     try:
         df = pd.read_excel(file.name)
@@ -71,15 +68,23 @@ def generate_labels(file, rack_number):
     except Exception as e:
         return f"Error generating labels: {e}"
 
+# Gradio UI
 with gr.Blocks() as demo:
-    with gr.Row():
-        gr.Image("logo.png", elem_id="logo", show_label=False, show_download_button=False, scale=0)
-        gr.Markdown("<h1 style='margin-left: 10px;'>Genebank Label Generator</h1>")
+    gr.HTML(header_html())
+    
+    gr.Markdown("""
+    **Instructions:**  
+    - Upload `.xlsx` file with list of locations in a column named `Sticker`.  
+    - Check the [sample file here](file/Bottle_Location.xlsx) for correct format.
+    """)
+    
     with gr.Row():
         file = gr.File(label="Upload Excel File (.xlsx)", file_types=[".xlsx"])
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
+    
     generate_btn = gr.Button("Generate Labels")
     output = gr.Textbox(label="ZPL Output", lines=20)
+    
     generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
 
 demo.launch()
