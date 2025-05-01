@@ -64,6 +64,7 @@ with gr.Blocks() as demo:
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
 
     gr.Markdown("""
+    
     # Genebank Label Generator
     
     **Introduction:**  
@@ -73,7 +74,8 @@ with gr.Blocks() as demo:
     - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
     - Enter the correct Rack number.
     - You can download and check the format from the sample file below for reference.
-    - Copy and paste the ZPL output in the GGCE Label Printer App.
+    - Generate Print Job in the GGCE Label Printer App and Copy and paste the ZPL output.
+    
     """)
     gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
 
