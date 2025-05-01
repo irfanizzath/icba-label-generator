@@ -74,7 +74,7 @@ with gr.Blocks() as demo:
     - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
     - Enter the correct Rack number.
     - You can download and check the format from the sample file below for reference.
-    - Generate Print Job in the GGCE Label Printer App and Copy and paste the ZPL output.
+    - Copy and paste the ZPL output and generate the print job in the GGCE Label Printer App.
     
     """)
     gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
