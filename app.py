@@ -1,4 +1,3 @@
-
 import gradio as gr
 import pandas as pd
 
@@ -60,38 +59,39 @@ def generate_labels(file, rack_number):
 
 # Gradio UI
 with gr.Blocks() as demo:
-    with gr.Row():
-        gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
+    # Ribbon with logo
+    gr.HTML("""
+    <div style="width: 100%; background-color: #f5f5f5; padding: 10px 0; text-align: center;">
+        <img src="logo.png" style="height: 60px;">
+    </div>
+    """)
 
     gr.Markdown("""
     # Genebank Label Generator
-    
+
     **Introduction:**  
     - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
-
     **Instructions:**  
     - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
     - Enter the correct Rack number.
     - You can download and check the format from the sample file below for reference.
     - Copy and paste the ZPL output in the GGCE Label Printer App.
-
     """)
+    
     gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
 
     with gr.Row():
         file = gr.File(label="Upload Excel File (.xlsx)", file_types=[".xlsx"])
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
-    
+
     generate_btn = gr.Button("Generate Labels")
     output = gr.Textbox(label="ZPL Output", lines=20)
-    
+
     generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
 
     gr.Markdown("""
     **Developed by:**  
     Mohamed Irfan, International Center for Biosaline Agriculture
     """)
-    
+
 demo.launch()
-
-
