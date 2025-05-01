@@ -68,6 +68,7 @@ with gr.Blocks() as demo:
     
     **Introduction:**  
     - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
+    
     **Instructions:**  
     - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
     - Enter the correct Rack number.
