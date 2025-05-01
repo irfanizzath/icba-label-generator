@@ -1,8 +1,8 @@
 ---
-title: Small Label Generator
-emoji: 🌱
+title: ICBA Genebank - Small Location Labels Generator
+emoji: 🖨️
 colorFrom: green
-colorTo: blue
+colorTo: yellow
 sdk: gradio
 sdk_version: 5.28.0
 app_file: app.py
