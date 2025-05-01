@@ -46,7 +46,7 @@ def generate_labels(file, rack_number):
         return f"Error reading Excel file: {e}"
 
     try:
-        stickers = df['Sticker'].dropna().tolist()
+        stickers = df.iloc[1:,0].dropna().tolist()
         output = ""
         n = len(stickers)
         mid = n // 2
