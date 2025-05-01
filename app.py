@@ -65,7 +65,7 @@ with gr.Blocks() as demo:
 
     gr.Markdown("""
     
-    # Genebank Label Generator
+    # ICBA Genebank - Small Location Labels Generator
     
     **Introduction:**  
     - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
