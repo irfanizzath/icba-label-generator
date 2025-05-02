@@ -48,14 +48,11 @@ def generate_labels_from_text(sticker_text, rack_number):
         output = ""
         n = len(stickers)
 
-        # Pair stickers from start and middle
-        mid = n // 2
-        for i in range(mid):
-            output += small_label(rack_number, stickers[i], stickers[i + mid]) + "\n"
-
-        if n % 2 != 0:
-            # Odd number — last one gets its own label with blank pair
-            output += small_label(rack_number, stickers[mid], '')
+        # Loop over every 2 items
+        for i in range(0, n, 2):
+            bottle1 = stickers[i]
+            bottle2 = stickers[i + 1] if i + 1 < n else ''  # blank if odd
+            output += small_label(rack_number, bottle1, bottle2) + "\n"
 
         return output.strip()
     except Exception as e:
