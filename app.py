@@ -3,6 +3,10 @@ import pandas as pd
 
 # ZPL label generation function
 def small_label(rack_number, plastic_bottle1, plastic_bottle2):
+    # Only convert to int if the string is not empty
+    bottle1 = str(int(plastic_bottle1)) if plastic_bottle1.strip() else ''
+    bottle2 = str(int(plastic_bottle2)) if plastic_bottle2.strip() else ''
+    
     return f'''
 CT~~CD,~CC^~CT~
 ^XA
@@ -29,10 +33,10 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 ^LS0
 ^FPH,3^FT159,182^A0B,34,33^FB182,1,9,C^FH\\^CI28^FD{rack_number}\\5C&^FS^CI27
 ^FO112,0^GFA,53,2928,16,:Z64:eJztx6EBAAAIA6AFD9/pVg8wQqM5Jqm7u7u7u799AZcGXl0=:6E3C
-^FPH,3^FT202,183^A0B,34,33^FB183,1,9,C^FH\\^CI28^FD{int(plastic_bottle1)}\\5C&^FS^CI27
+^FPH,3^FT202,183^A0B,34,33^FB183,1,9,C^FH\\^CI28^FD{bottle1}\\5C&^FS^CI27
 ^FPH,3^FT268,182^A0B,34,33^FB182,1,9,C^FH\\^CI28^FD{rack_number}\\5C&^FS^CI27
 ^FO221,0^GFA,53,2928,16,:Z64:eJztx6EBAAAIA6AFD9/pVg8wQqM5Jqm7u7u7u799AZcGXl0=:6E3C
-^FPH,3^FT311,183^A0B,34,33^FB183,1,9,C^FH\\^CI28^FD{int(plastic_bottle2)}\\5C&^FS^CI27
+^FPH,3^FT311,183^A0B,34,33^FB183,1,9,C^FH\\^CI28^FD{bottle2}\\5C&^FS^CI27
 ^PQ1,0,1,Y
 ^XZ
     '''
