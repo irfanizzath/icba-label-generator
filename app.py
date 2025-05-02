@@ -66,6 +66,7 @@ with gr.Blocks() as demo:
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
 
     gr.Markdown("""
+    
     # ICBA Genebank - Small Location Labels Generator
     
     **Introduction:**  
@@ -74,7 +75,7 @@ with gr.Blocks() as demo:
     **Instructions:**  
     - Paste your list of bottle numbers below, one per line.
     - Enter the correct Rack number.
-    - The generated ZPL code will appear in the box below, ready to print.
+    - Click "Generate Labels" to get the ZPL code for printing.
     
     **Example Input:**  
     ```
@@ -89,12 +90,13 @@ with gr.Blocks() as demo:
         sticker_input = gr.Textbox(label="Paste Bottle IDs (One per line)", lines=10, placeholder="e.g.,\n1001\n1002\n1003")
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
 
+    generate_btn = gr.Button("Generate Labels")
+
     with gr.Column(elem_id="zpl-output"):
         output = gr.Textbox(label="ZPL Output", lines=20, interactive=False)
 
     # Gradio interaction to generate labels from the inputs
-    sticker_input.submit(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
-    rack_input.submit(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
+    generate_btn.click(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
 
     gr.Markdown("""
     **Developed by:**  
