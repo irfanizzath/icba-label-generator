@@ -40,15 +40,19 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 # Label generation from pasted text
 def generate_labels_from_text(sticker_text, rack_number):
     try:
-        # Split input into lines and strip whitespace
         stickers = [line.strip() for line in sticker_text.strip().splitlines() if line.strip()]
         output = ""
         n = len(stickers)
+
+        # Pair stickers from start and middle
         mid = n // 2
         for i in range(mid):
             output += small_label(rack_number, stickers[i], stickers[i + mid]) + "\n"
+
         if n % 2 != 0:
-            output += small_label(rack_number, '', stickers[-1])
+            # Odd number — last one gets its own label with blank pair
+            output += small_label(rack_number, stickers[mid], '')
+
         return output.strip()
     except Exception as e:
         return f"Error generating labels: {e}"
