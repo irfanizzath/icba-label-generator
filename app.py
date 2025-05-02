@@ -1,4 +1,3 @@
-
 import gradio as gr
 import pandas as pd
 
@@ -38,22 +37,18 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 ^XZ
     '''
 
-# Label generation from Excel
-def generate_labels(file, rack_number):
+# Label generation from pasted text
+def generate_labels_from_text(sticker_text, rack_number):
     try:
-        df = pd.read_excel(file.name)
-    except Exception as e:
-        return f"Error reading Excel file: {e}"
-
-    try:
-        stickers = df.iloc[:,0].dropna().tolist()
+        # Split input into lines and strip whitespace
+        stickers = [line.strip() for line in sticker_text.strip().splitlines() if line.strip()]
         output = ""
         n = len(stickers)
         mid = n // 2
         for i in range(mid):
             output += small_label(rack_number, stickers[i], stickers[i + mid]) + "\n"
         if n % 2 != 0:
-            output += small_label(' ', ' ', stickers[-1])
+            output += small_label(rack_number, '', stickers[-1])
         return output.strip()
     except Exception as e:
         return f"Error generating labels: {e}"
@@ -66,31 +61,36 @@ with gr.Blocks() as demo:
     gr.Markdown("""
     
     # ICBA Genebank - Small Location Labels Generator
-    
+
     **Introduction:**  
-    - This tool generates the ZPL code for two small location labels in a 2 x 1 in label sticker.
-    
+    - This tool generates ZPL code for 2 small location labels per 2x1 inch sticker.
+
     **Instructions:**  
-    - Upload a `.xlsx` file containing a column named `Sticker` with bottle IDs.
+    - Paste your list of bottle numbers below, one per line.
     - Enter the correct Rack number.
-    - You can download and check the format from the sample file below for reference.
-    - Copy and paste the ZPL output and generate the print job in the GGCE Label Printer App.
-    
+    - Click "Generate Labels" to get the ZPL code for printing.
+
+    **Example Input:**  
+    ```
+    1001
+    1002
+    1003
+    1004
+    ```
     """)
-    gr.File(label="Download Sample Excel", value="file/Bottle_Location.xlsx", interactive=False)
 
     with gr.Row():
-        file = gr.File(label="Upload Excel File (.xlsx)", file_types=[".xlsx"])
+        sticker_input = gr.Textbox(label="Paste Bottle IDs (One per line)", lines=10, placeholder="e.g.,\n1001\n1002\n1003")
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
-    
+
     generate_btn = gr.Button("Generate Labels")
     output = gr.Textbox(label="ZPL Output", lines=20)
-    
-    generate_btn.click(fn=generate_labels, inputs=[file, rack_input], outputs=output)
+
+    generate_btn.click(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
 
     gr.Markdown("""
     **Developed by:**  
     Mohamed Irfan, International Center for Biosaline Agriculture
     """)
-    
+
 demo.launch()
