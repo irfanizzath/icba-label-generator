@@ -66,17 +66,13 @@ with gr.Blocks() as demo:
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
 
     gr.Markdown("""
-    
     # ICBA Genebank - Small Location Labels Generator
-
     **Introduction:**  
     - This tool generates ZPL code for 2 small location labels per 2x1 inch sticker.
-
     **Instructions:**  
     - Paste your list of bottle numbers below, one per line.
     - Enter the correct Rack number.
     - Click "Generate Labels" to get the ZPL code for printing.
-
     **Example Input:**  
     ```
     1001
@@ -91,7 +87,59 @@ with gr.Blocks() as demo:
         rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104")
 
     generate_btn = gr.Button("Generate Labels")
-    output = gr.Textbox(label="ZPL Output", lines=20)
+
+    with gr.Column(elem_id="zpl-output"):
+        output = gr.Textbox(label="ZPL Output", lines=20)
+
+        gr.HTML("""
+        <style>
+        .copy-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 5px;
+            opacity: 0.6;
+        }
+
+        .copy-button:hover {
+            opacity: 1;
+        }
+
+        .copy-icon {
+            width: 20px;
+            height: 20px;
+            fill: #4a4a4a;
+        }
+
+        .copy-wrapper {
+            position: relative;
+        }
+        </style>
+
+        <script>
+        function copyToClipboardIcon() {
+            const text = document.querySelector('#zpl-output textarea');
+            text.select();
+            document.execCommand('copy');
+
+            const btn = document.getElementById('copy-btn');
+            const original = btn.innerHTML;
+            btn.innerHTML = '✅';
+            setTimeout(() => btn.innerHTML = original, 1000);
+        }
+        </script>
+
+        <div class="copy-wrapper">
+            <button class="copy-button" onclick="copyToClipboardIcon()" id="copy-btn" title="Copy to Clipboard">
+                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+                </svg>
+            </button>
+        </div>
+        """)
 
     generate_btn.click(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
 
