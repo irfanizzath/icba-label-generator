@@ -53,7 +53,7 @@ def generate_labels(file, rack_number):
         for i in range(mid):
             output += small_label(rack_number, stickers[i], stickers[i + mid]) + "\n"
         if n % 2 != 0:
-            output += small_label(rack_number, 0, stickers[-1])
+            output += small_label(' ', ' ', stickers[-1])
         return output.strip()
     except Exception as e:
         return f"Error generating labels: {e}"
