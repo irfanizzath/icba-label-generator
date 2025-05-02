@@ -67,12 +67,15 @@ with gr.Blocks() as demo:
 
     gr.Markdown("""
     # ICBA Genebank - Small Location Labels Generator
+    
     **Introduction:**  
     - This tool generates ZPL code for 2 small location labels per 2x1 inch sticker.
+    
     **Instructions:**  
     - Paste your list of bottle numbers below, one per line.
     - Enter the correct Rack number.
     - The generated ZPL code will appear in the box below, ready to print.
+    
     **Example Input:**  
     ```
     1001
