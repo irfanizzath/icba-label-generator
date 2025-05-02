@@ -45,14 +45,16 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 def generate_labels_from_text(sticker_text, rack_number):
     try:
         stickers = [line.strip() for line in sticker_text.strip().splitlines() if line.strip()]
-        output = ""
         n = len(stickers)
+        mid = (n + 1) // 2  # ensures extra item goes to left side if odd
+        left = stickers[:mid]
+        right = stickers[mid:]
 
-        # Loop over every 2 items
-        for i in range(0, n, 2):
-            bottle1 = stickers[i]
-            bottle2 = stickers[i + 1] if i + 1 < n else ''  # blank if odd
-            output += small_label(rack_number, bottle1, bottle2) + "\n"
+        output = ""
+        for i in range(mid):
+            l = left[i]
+            r = right[i] if i < len(right) else ''
+            output += small_label(rack_number, l, r) + "\n"
 
         return output.strip()
     except Exception as e:
