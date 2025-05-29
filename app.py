@@ -93,7 +93,31 @@ with gr.Blocks() as demo:
     generate_btn = gr.Button("Generate Labels")
 
     with gr.Column(elem_id="zpl-output"):
-        output = gr.Textbox(label="ZPL Output", lines=20, interactive=False)
+
+        output = gr.Textbox(label="ZPL Output", lines=20, interactive=False, elem_id="zpl-output-box")
+        
+        copy_btn = gr.Button("Copy to Clipboard")
+        
+        gr.HTML("""
+        <script>
+        function copyToClipboard() {
+            const outputBox = document.querySelector('#zpl-output-box textarea');
+            if (outputBox) {
+                outputBox.select();
+                document.execCommand('copy');
+                alert("ZPL code copied to clipboard!");
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButton = document.querySelector('button:contains("Copy to Clipboard")');
+            if (copyButton) {
+                copyButton.onclick = copyToClipboard;
+            }
+        });
+        </script>
+        """)
+
+
 
     # Gradio interaction to generate labels from the inputs
     generate_btn.click(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
