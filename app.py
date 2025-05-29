@@ -96,8 +96,7 @@ with gr.Blocks() as demo:
 
         output = gr.Textbox(label="ZPL Output", lines=20, interactive=False, elem_id="zpl-output-box")
         
-        copy_btn = gr.Button("Copy to Clipboard")
-        
+        copy_btn = gr.Button("Copy to Clipboard", elem_id="copy-btn")
         gr.HTML("""
         <script>
         function copyToClipboard() {
@@ -109,7 +108,7 @@ with gr.Blocks() as demo:
             }
         }
         document.addEventListener('DOMContentLoaded', function() {
-            const copyButton = document.querySelector('button:contains("Copy to Clipboard")');
+            const copyButton = document.getElementById('copy-btn');
             if (copyButton) {
                 copyButton.onclick = copyToClipboard;
             }
