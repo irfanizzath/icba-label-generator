@@ -44,7 +44,7 @@ def small_label(rack_number, plastic_bottle1, plastic_bottle2):
 # Label generation from pasted text
 def generate_labels_from_text(sticker_text, rack_number):
     try:
-        stickers = [line.strip() for line in sticker_text.strip().splitlines() if line.strip()]
+        stickers = sorted([line.strip() for line in sticker_text.strip().splitlines() if line.strip()])
         n = len(stickers)
         mid = (n + 1) // 2  # ensures extra item goes to left side if odd
         left = stickers[:mid]
