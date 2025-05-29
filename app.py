@@ -1,12 +1,9 @@
 import gradio as gr
-import pandas as pd
 
 # ZPL label generation function
 def small_label(rack_number, plastic_bottle1, plastic_bottle2):
-    # Only convert to int if the string is not empty
     bottle1 = str(int(plastic_bottle1)) if plastic_bottle1.strip() else ''
     bottle2 = str(int(plastic_bottle2)) if plastic_bottle2.strip() else ''
-    
     return f'''
 CT~~CD,~CC^~CT~
 ^XA
@@ -46,7 +43,7 @@ def generate_labels_from_text(sticker_text, rack_number):
     try:
         stickers = sorted([line.strip() for line in sticker_text.strip().splitlines() if line.strip()])
         n = len(stickers)
-        mid = (n + 1) // 2  # ensures extra item goes to left side if odd
+        mid = (n + 1) // 2
         left = stickers[:mid]
         right = stickers[mid:]
 
@@ -66,17 +63,16 @@ with gr.Blocks() as demo:
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
 
     gr.Markdown("""
-    
     # ICBA Genebank - Small Location Labels Generator
-    
+
     **Introduction:**  
-    - This tool generates ZPL code for 2 small location labels per 2x1 inch sticker.
-    
+    This tool generates ZPL code for 2 small location labels per 2x1 inch sticker.
+
     **Instructions:**  
     - Paste your list of bottle numbers below, one per line.
     - Enter the correct Rack number.
     - Click "Generate Labels" to get the ZPL code for printing.
-    
+
     **Example Input:**  
     ```
     1001
@@ -93,32 +89,30 @@ with gr.Blocks() as demo:
     generate_btn = gr.Button("Generate Labels")
 
     with gr.Column(elem_id="zpl-output"):
-
         output = gr.Textbox(label="ZPL Output", lines=20, interactive=False, elem_id="zpl-output-box")
-        
         copy_btn = gr.Button("Copy to Clipboard", elem_id="copy-btn")
+
         gr.HTML("""
         <script>
-        function copyToClipboard() {
-            const outputBox = document.querySelector('#zpl-output-box textarea');
-            if (outputBox) {
-                outputBox.select();
-                document.execCommand('copy');
-                alert("ZPL code copied to clipboard!");
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const copyButton = document.getElementById('copy-btn');
-            if (copyButton) {
-                copyButton.onclick = copyToClipboard;
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            const copyBtn = document.getElementById("copy-btn");
+            copyBtn.addEventListener("click", async function () {
+                const textarea = document.querySelector('#zpl-output-box textarea');
+                if (textarea) {
+                    try {
+                        await navigator.clipboard.writeText(textarea.value);
+                        alert("ZPL code copied to clipboard!");
+                    } catch (err) {
+                        alert("Failed to copy: " + err);
+                    }
+                } else {
+                    alert("Output textarea not found!");
+                }
+            });
         });
         </script>
         """)
 
-
-
-    # Gradio interaction to generate labels from the inputs
     generate_btn.click(fn=generate_labels_from_text, inputs=[sticker_input, rack_input], outputs=output)
 
     gr.Markdown("""
