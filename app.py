@@ -121,7 +121,7 @@ def generate_eppendorf_labels_range(first_tube, last_tube):
 # --- Gradio UI ---
 with gr.Blocks() as demo:
     with gr.Row():
-        gr.Image("logo.png", elem_id="logo", show_label=False, height=100, width=250, scale=0)
+        gr.Image("logo.png", elem_id="logo", show_label=False, height=120, width=300, scale=0)
 
     gr.Markdown("""
     # ICBA Genebank - Labels Generator Tool
