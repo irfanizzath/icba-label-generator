@@ -95,9 +95,14 @@ def generate_location_labels(sticker_text, rack_number):
     except Exception as e:
         return f"Error generating labels: {e}"
 
-def generate_eppendorf_labels(sticker_text):
+def generate_eppendorf_labels_range(first_tube, last_tube):
     try:
-        stickers = sorted([line.strip() for line in sticker_text.strip().splitlines() if line.strip()])
+        first = int(first_tube)
+        last = int(last_tube)
+        if first > last:
+            return "First tube number must be less than or equal to last tube number."
+
+        stickers = [str(i) for i in range(first, last + 1)]
         n = len(stickers)
         mid = (n + 1) // 2
         left = stickers[:mid]
@@ -111,7 +116,7 @@ def generate_eppendorf_labels(sticker_text):
 
         return output.strip()
     except Exception as e:
-        return f"Error generating labels: {e}"
+        return f"Error generating Eppendorf labels: {e}"
 
 # --- Gradio UI ---
 with gr.Blocks() as demo:
@@ -128,9 +133,25 @@ with gr.Blocks() as demo:
     """)
 
     mode = gr.Radio(["Location Labels", "Eppendorf Labels"], label="Choose Label Type", value="Location Labels")
-
-    sticker_input = gr.Textbox(label="Paste Bottle IDs (One per line)", lines=10, placeholder="e.g.,\n1001\n1002\n1003")
-    rack_input = gr.Textbox(label="Enter Rack Number (Only for Location Labels)", placeholder="e.g., A020104")
+    
+    # Shared
+    sticker_input = gr.Textbox(label="Paste Bottle IDs (Only for Location Labels)", lines=10, visible=True)
+    rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104", visible=True)
+    
+    # New Inputs for Eppendorf Range
+    first_tube = gr.Textbox(label="First Tube Number (Only for Eppendorf Labels)", placeholder="e.g., 1", visible=False)
+    last_tube = gr.Textbox(label="Last Tube Number (Only for Eppendorf Labels)", placeholder="e.g., 46", visible=False)
+    
+    # Update visibility based on mode
+    def update_visibility(mode):
+        return {
+            sticker_input: gr.update(visible=(mode == "Location Labels")),
+            rack_input: gr.update(visible=(mode == "Location Labels")),
+            first_tube: gr.update(visible=(mode == "Eppendorf Labels")),
+            last_tube: gr.update(visible=(mode == "Eppendorf Labels")),
+        }
+    
+    mode.change(fn=update_visibility, inputs=mode, outputs=[sticker_input, rack_input, first_tube, last_tube])
 
     generate_btn = gr.Button("Generate Labels")
 
@@ -159,13 +180,15 @@ with gr.Blocks() as demo:
         </script>
         """)
 
-    def generate_by_mode(mode, bottles, rack):
+    def generate_by_mode(mode, bottles, rack, first, last):
         if mode == "Location Labels":
             return generate_location_labels(bottles, rack)
         else:
-            return generate_eppendorf_labels(bottles)
-
-    generate_btn.click(fn=generate_by_mode, inputs=[mode, sticker_input, rack_input], outputs=output)
+            return generate_eppendorf_labels_range(first, last)
+    
+    generate_btn.click(fn=generate_by_mode,
+                       inputs=[mode, sticker_input, rack_input, first_tube, last_tube],
+                       outputs=output)
 
     gr.Markdown("""
     **Developed by:**  
