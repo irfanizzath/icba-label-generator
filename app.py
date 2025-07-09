@@ -124,23 +124,22 @@ with gr.Blocks() as demo:
         gr.Image("logo.png", elem_id="logo", show_label=False, scale=0)
 
     gr.Markdown("""
-    # ICBA Genebank - Label Generator
-    **Instructions:**  
+    # ICBA Genebank - Labels Generator Tool
+    **Instructions for Location Labelling:**  
     - Paste your list of bottle numbers below (one per line).
-    - Choose the mode: Location (with Rack) or Eppendorf (without).
-    - Enter Rack number if using Location mode.
+    - Enter the Rack number.
     - Click "Generate Labels" to get ZPL code for printing.
     """)
 
     mode = gr.Radio(["Location Labels", "Eppendorf Labels"], label="Choose Label Type", value="Location Labels")
     
     # Shared
-    sticker_input = gr.Textbox(label="Paste Bottle IDs (Only for Location Labels)", lines=10, visible=True)
+    sticker_input = gr.Textbox(label="Paste Bottle IDs", lines=10, visible=True)
     rack_input = gr.Textbox(label="Enter Rack Number", placeholder="e.g., A020104", visible=True)
     
     # New Inputs for Eppendorf Range
-    first_tube = gr.Textbox(label="First Tube Number (Only for Eppendorf Labels)", placeholder="e.g., 1", visible=False)
-    last_tube = gr.Textbox(label="Last Tube Number (Only for Eppendorf Labels)", placeholder="e.g., 46", visible=False)
+    first_tube = gr.Textbox(label="First Tube Number", placeholder="e.g., 1", visible=False)
+    last_tube = gr.Textbox(label="Last Tube Number", placeholder="e.g., 46", visible=False)
     
     # Update visibility based on mode
     def update_visibility(mode):
