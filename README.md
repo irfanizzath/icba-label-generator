@@ -13,4 +13,4 @@ short_description: Two Small Location Labels in One Sticker for Genebank
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
-<img width="2000" height="1926" alt="image" src="https://github.com/user-attachments/assets/b08e2d88-9c3d-4ce8-a3ac-c55128e288c8" />
+<img width="1979" height="1926" alt="image" src="https://github.com/user-attachments/assets/ef4412eb-b6bb-4c50-a508-031fbf5e854e" />
