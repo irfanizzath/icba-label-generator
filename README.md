@@ -1,3 +1,5 @@
+Available at: https://huggingface.co/spaces/mohd3rfan/small-label-generator
+
 ---
 title: ICBA Genebank - Small Location Labels Generator
 emoji: 🖨️
